@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
-import '../data/player.dart';
+import 'package:sus_tracker/data/player.dart';
 
 class EditPlayerDialog extends StatefulWidget {
   const EditPlayerDialog({super.key, required this.updatePlayers});
@@ -37,6 +36,7 @@ class _EditPlayerDialogState extends State<EditPlayerDialog> {
     const Color(0xFFFF7F50), // Coral
   ];
 
+  // Handles when a user selects a color from the picker
   void _onColorChanged(Color newColor) {
     if (_selectedColor == newColor) {
       return;
