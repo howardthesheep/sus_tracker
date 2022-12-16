@@ -17,6 +17,190 @@ class _PlayerCardState extends State<PlayerCard> {
   bool isDead = false;
   AgentStatus status = AgentStatus.unknown;
 
+  // Displays a red overlay over a dead characters player card
+  Widget _buildDeathOverlay() {
+    return IgnorePointer(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8.0),
+                ),
+                border: Border.all(
+                  color: Colors.red,
+                  width: 3.0,
+                  style: BorderStyle.solid,
+                ),
+                color: Colors.red.withAlpha(128),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  // Build custom buttons for denoting if a player is dead or alive
+  Widget _buildLifeOptions() {
+    return Expanded(
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() {
+                isDead = true;
+              }),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                  ),
+                  color: Colors.red.withAlpha(156),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.red,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Dead',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() {
+                isDead = false;
+              }),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(8.0),
+                  ),
+                  color: Colors.grey.withAlpha(156),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.grey,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Alive',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  // Builds custom buttons for denoting a players AgentStatus
+  Widget _buildStatusOptions() {
+    return Expanded(
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() {
+                status = AgentStatus.imposter;
+              }),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(8.0),
+                  ),
+                  color: Colors.red.withAlpha(156),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.red,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Sus',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() {
+                status = AgentStatus.unknown;
+              }),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.withAlpha(156),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.grey,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Unknown',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() {
+                status = AgentStatus.crewmate;
+              }),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomRight: Radius.circular(8.0),
+                  ),
+                  color: Colors.green.withAlpha(156),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.green,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Good',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Builds a button overlay over a player card on hover
+  Widget _buildHoverOverlay() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        _buildLifeOptions(),
+        _buildStatusOptions(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
@@ -32,8 +216,9 @@ class _PlayerCardState extends State<PlayerCard> {
       }),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 1.0),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(8.0),
+          boxShadow: kElevationToShadow[8],
         ),
         width: double.infinity, // This makes column fill the full width of Grid
         child: Center(
@@ -54,177 +239,8 @@ class _PlayerCardState extends State<PlayerCard> {
                   ),
                 ],
               ),
-              if (isDead)
-                IgnorePointer(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.red,
-                              width: 3.0,
-                              style: BorderStyle.solid,
-                            ),
-                            color: Colors.red.withAlpha(128),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              if (isHovered)
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => setState(() {
-                                isDead = true;
-                              }),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(8.0),
-                                  ),
-                                  color: Colors.red.withAlpha(128),
-                                  border: Border.all(
-                                    width: 3,
-                                    color: Colors.red,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Dead',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => setState(() {
-                                isDead = false;
-                              }),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(8.0),
-                                  ),
-                                  color: Colors.grey.withAlpha(128),
-                                  border: Border.all(
-                                    width: 3,
-                                    color: Colors.grey,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Alive',
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ), // Dead or alive
-                    SizedBox(
-                      height: 8.0,
-                      child: Container(
-                        decoration: const BoxDecoration(color: Colors.black),
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => setState(() {
-                                status = AgentStatus.imposter;
-                              }),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(8.0),
-                                  ),
-                                  color: Colors.red.withAlpha(128),
-                                  border: Border.all(
-                                    width: 3,
-                                    color: Colors.red,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Sus',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => setState(() {
-                                status = AgentStatus.unknown;
-                              }),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.withAlpha(128),
-                                  border: Border.all(
-                                    width: 3,
-                                    color: Colors.grey,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Unknown',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => setState(() {
-                                status = AgentStatus.crewmate;
-                              }),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(8.0),
-                                  ),
-                                  color: Colors.green.withAlpha(128),
-                                  border: Border.all(
-                                    width: 3,
-                                    color: Colors.green,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'Good',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+              if (isDead) _buildDeathOverlay(),
+              if (isHovered) _buildHoverOverlay(),
             ],
           ),
         ),

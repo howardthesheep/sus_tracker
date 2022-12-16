@@ -3,15 +3,10 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:sus_tracker/data/app_state.dart';
 import 'package:sus_tracker/widgets/player_card.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  Widget _buildPlayerLayout(AppState model) {
+  Widget _buildPlayerLayout(AppState model, BuildContext context) {
     List<Widget> playerWidgets = [];
 
     for (var player in model.players) {
@@ -36,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Center(
       child: ScopedModelDescendant<AppState>(
-        builder: (context, child, model) => _buildPlayerLayout(model),
+        builder: (context, child, model) => _buildPlayerLayout(model, context),
       ),
     );
   }
