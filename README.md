@@ -1,16 +1,17 @@
 # sus_tracker
 
-A small application to help track who is sus and who is not
+A small application to be used when playing Among Us with friends. This application acts as a small summary dashboard and scratch pad where
+you can note whose alive and dead. Additionally, you can note the roles of players (Imposter, Crewmate, Unknown).
 
-## Getting Started
+Ideally, you would run this program on a second monitor and use it as a reference for information during the voting/discussion phase.
 
-This project is a starting point for a Flutter application.
+## Technical Information
 
-A few resources to get you started if this is your first Flutter project:
+This project was built using the Flutter framework.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Development Build
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To run a development build of this program, navigate into the project directory and run:
+`flutter run -d windows`
+
+_Note: This program can run on any of the valid flutter build targets, not just windows_
